@@ -11,6 +11,5 @@ locals {
     Service   = "Static Website"
     CreatedAt = "2022-01-13"
     Module    = "3"
-
   }
 }

@@ -1,7 +1,11 @@
 data "template_file" "s3-public_policy" {
 
   template = file("policy.json")
-  vars     = { bucket_name = local.domain }
+  vars = {
+    bucket_name = local.domain
+    cdn_oai     = aws_cloudfront_origin_access_identity.this.id
+
+  }
 }
 
 module "logs" {
