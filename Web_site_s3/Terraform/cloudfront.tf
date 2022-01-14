@@ -16,7 +16,7 @@ resource "aws_cloudfront_distribution" "this" {
   }
 
   default_cache_behavior {
-    allowed_methods        = ["HEAD", "GET", "OPTIONS" ]
+    allowed_methods        = ["HEAD", "GET", "OPTIONS"]
     cached_methods         = ["HEAD", "GET"]
     target_origin_id       = local.regional_domain
     viewer_protocol_policy = "redirect-to-https"
