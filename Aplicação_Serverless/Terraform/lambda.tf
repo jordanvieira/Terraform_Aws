@@ -46,6 +46,12 @@ resource "aws_lambda_function" "s3" {
   tags = local.common_tags
 
   layers = [aws_lambda_layer_version.join.arn]
+
+  environment {
+    variables = {
+      TOPIC_ARN = aws_sns_topic.this.arn
+    }
+  }
 }
 
 
@@ -85,4 +91,19 @@ resource "aws_lambda_permission" "s3" {
   function_name = aws_lambda_function.s3.arn
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.todo.arn
+}
+
+resource "aws_lambda_permission" "dynamo" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.dynamo.arn
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "arn:aws:execute-api:${var.aws_region}:${var.aws_account_id}:*/*"
+}
+resource "aws_lambda_permission" "sns" {
+  statement_id  = "AllowExecutionFromSNS"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.dynamo.function_name
+  principal     = "sns.amazonaws.com"
+  source_arn    = aws_sns_topic.this.arn
 }
