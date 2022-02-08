@@ -23,6 +23,8 @@ resource "aws_eip_association" "eip_asso" {
   allocation_id = aws_eip.eipv.id
 }
 
+
+
 #Criando Instancia EC2 - WIN_SQL_SERVER
 resource "aws_instance" "sql_server" {
   ami           = "ami-04505e74c0741db8d"
