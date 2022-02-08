@@ -38,6 +38,7 @@ resource "aws_instance" "ubuntu" {
   ami           = "ami-04505e74c0741db8d"
   instance_type = "t3a.small"
   key_name      = "terraform"
+  associate_public_ip_address = true
 
   subnet_id              = aws_subnet.public.0.id
   availability_zone      = "${var.aws_region}a"
