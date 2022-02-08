@@ -16,14 +16,14 @@ resource "aws_internet_gateway" "this" {
   tags   = merge(local.common_tags, { Name = "Terraform IGW " })
 }
 
-#Cria Elastic IP
-resource "aws_eip" "gateway" {
-  count      = 1
-  vpc        = true
-  depends_on = [aws_internet_gateway.this]
+# #Cria Elastic IP
+# resource "aws_eip" "gateway" {
+#   count      = 1
+#   vpc        = true
+#   depends_on = [aws_internet_gateway.this]
 
-  tags = merge(local.common_tags, { Name = "Elastic Ip " })
-}
+#   tags = merge(local.common_tags, { Name = "Elastic Ip " })
+# }
 
 #Cria VPC Nat Gateway
 resource "aws_nat_gateway" "gateway" {

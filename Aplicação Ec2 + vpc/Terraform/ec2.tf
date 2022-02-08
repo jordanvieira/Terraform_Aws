@@ -11,14 +11,16 @@
 
 # }
 
+#Associando elastic ip
 resource "aws_eip_association" "eip_assoc" {
   instance_id   = aws_instance.sql_server.id
   allocation_id = aws_eip.eip.id
 }
 
-resource "aws_eip_association" "eip_assoc" {
+#Associando elastic ip
+resource "aws_eip_association" "eip_asso" {
   instance_id   = aws_instance.ubuntu.id
-  allocation_id = aws_eip.eip.id
+  allocation_id = aws_eip.eipv.id
 }
 
 #Criando Instancia EC2 - WIN_SQL_SERVER
@@ -66,4 +68,11 @@ resource "aws_instance" "ubuntu" {
 
 resource "aws_eip" "eip" {
   vpc = true
+  tags = merge(local.common_tags, { Name = "Terraform Sql-Server " })
 }
+
+resource "aws_eip" "eipv" {
+  vpc = true
+  tags = merge(local.common_tags, { Name = "Terraform VPN " })
+}
+

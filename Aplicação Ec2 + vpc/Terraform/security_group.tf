@@ -64,6 +64,6 @@ resource "aws_security_group" "vpn" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(local.common_tags, { Name = "Sql_server" })
+  tags = merge(local.common_tags, { Name = "VPN" })
 }
 
