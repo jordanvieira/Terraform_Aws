@@ -4,16 +4,16 @@ resource "aws_security_group" "sql_server" {
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    from_port   = 1433
-    to_port     = 1433
-    protocol    = "rdp"
+    from_port       = 1433
+    to_port         = 1433
+    protocol        = "TCP"
     security_groups = [aws_security_group.vpn.id]
   }
 
   ingress {
-    from_port   = 3177
-    to_port     = 3177
-    protocol    = "rdp"
+    from_port       = 3177
+    to_port         = 3177
+    protocol        = "TCP"
     security_groups = [aws_security_group.vpn.id]
   }
 
@@ -52,7 +52,7 @@ resource "aws_security_group" "vpn" {
   ingress {
     from_port   = 13690
     to_port     = 13690
-    protocol    = "udp"
+    protocol    = "UDP"
     cidr_blocks = ["0.0.0.0/0"]
   }
 

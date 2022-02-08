@@ -11,10 +11,20 @@
 
 # }
 
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = aws_instance.sql_server.id
+  allocation_id = aws_eip.eip.id
+}
+
+resource "aws_eip_association" "eip_assoc" {
+  instance_id   = aws_instance.ubuntu.id
+  allocation_id = aws_eip.eip.id
+}
+
 #Criando Instancia EC2 - WIN_SQL_SERVER
 resource "aws_instance" "sql_server" {
-  ami           = "ami-0aad84f764a2bd39a"
-  instance_type = "t3a.xlarge"
+  ami           = "ami-04505e74c0741db8d"
+  instance_type = "t2.micro"
   key_name      = "terraform"
 
 
@@ -35,16 +45,16 @@ resource "aws_instance" "sql_server" {
 
 
 resource "aws_instance" "ubuntu" {
-  ami           = "ami-04505e74c0741db8d"
-  instance_type = "t3a.small"
-  key_name      = "terraform"
+  ami                         = "ami-04505e74c0741db8d"
+  instance_type               = "t2.micro"
+  key_name                    = "terraform"
   associate_public_ip_address = true
 
   subnet_id              = aws_subnet.public.0.id
   availability_zone      = "${var.aws_region}a"
   vpc_security_group_ids = [aws_security_group.vpn.id]
 
-    root_block_device {
+  root_block_device {
     volume_size = 20
     volume_type = "gp3"
   }
@@ -52,4 +62,8 @@ resource "aws_instance" "ubuntu" {
 
   tags = merge(local.common_tags, { Name = "Terraform_ubuntu_VPN" })
 
+}
+
+resource "aws_eip" "eip" {
+  vpc = true
 }
